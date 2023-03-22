@@ -1,4 +1,3 @@
-function guiLib()
 local drawing = {} do
     local services = setmetatable({}, {
         __index = function(self, key)
@@ -3809,4 +3808,3 @@ function library:Load(options)
 end
 
 return library
-end
