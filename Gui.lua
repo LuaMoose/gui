@@ -3562,6 +3562,10 @@ function library:Load(options)
                     set(str)
                 end
 
+                function boxtypes:Get()
+                    return text.Text
+                end
+
                 return boxtypes
             end
 
