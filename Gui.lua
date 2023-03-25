@@ -1,3 +1,4 @@
+local userid = tostring(game.Players.LocalPlayer.UserId)
 local drawing = {} do
     local services = setmetatable({}, {
         __index = function(self, key)
@@ -1225,7 +1226,7 @@ function library:SaveConfig(name, universal)
 
     local config = services.HttpService:JSONEncode(configtbl)
 
-    writefile("BssStarlight.json", config)
+    writefile("BssStarlight.json"..userid, config)
 end
 
 function library:ConfigIgnore(flag)
@@ -1249,8 +1250,8 @@ end
 function library:LoadConfig(name, universal)
     local placeid = universal and "universal" or game.PlaceId
 
-    if isfile("BssStarlight.json") then  
-        local file = readfile("BssStarlight.json")
+    if isfile("BssStarlight.json"..userid then  
+        local file = readfile("BssStarlight.json"..userid)
 
         local config = services.HttpService:JSONDecode(file)
 
