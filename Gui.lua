@@ -1250,7 +1250,7 @@ end
 function library:LoadConfig(name, universal)
     local placeid = universal and "universal" or game.PlaceId
 
-    if isfile("BssStarlight.json"..userid then  
+    if isfile("BssStarlight.json"..userid) then  
         local file = readfile("BssStarlight.json"..userid)
 
         local config = services.HttpService:JSONDecode(file)
