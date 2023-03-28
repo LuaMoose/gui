@@ -1226,7 +1226,7 @@ function library:SaveConfig(name, universal)
 
     local config = services.HttpService:JSONEncode(configtbl)
 
-    writefile("BssStarlight"..userid..".json".. config)
+    writefile("BssStarlight"..tostring(userid)..".json".. config)
 end
 
 function library:ConfigIgnore(flag)
