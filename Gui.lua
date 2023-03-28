@@ -1203,7 +1203,7 @@ local configignores = {}
 
 function library:SaveConfig(name, universal)
     local configtbl = {}
-    local userid = tostring(game.Players.LocalPlayer.UserId)
+    local userid = tostring(game:GetService("Players").LocalPlayer.UserId)
 
     local placeid = universal and "universal" or game.PlaceId
 
@@ -1250,7 +1250,7 @@ end
 
 function library:LoadConfig(name, universal)
     local placeid = universal and "universal" or game.PlaceId
-    local userid = tostring(game.Players.LocalPlayer.UserId)
+    local userid = tostring(game:GetService("Players").LocalPlayer.UserId)
 
     if isfile("BssStarlight"..userid..".json".. config) then  
         local file = readfile("BssStarlight"..userid..".json".. config)
