@@ -1251,7 +1251,7 @@ end
 function library:LoadConfig(name, universal)
     local placeid = universal and "universal" or game.PlaceId
     local userid = tostring(game:GetService("Players").LocalPlayer.UserId)
-
+    print(userid)
     if isfile("BssStarlight"..userid..".json") then  
         local file = readfile("BssStarlight"..userid..".json")
 
