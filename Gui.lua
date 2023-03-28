@@ -1226,7 +1226,7 @@ function library:SaveConfig(name, universal)
 
     local config = services.HttpService:JSONEncode(configtbl)
 
-    writefile("BssStarlight.json"..userid, config)
+    writefile("BssStarlight"..userid..".json", config)
 end
 
 function library:ConfigIgnore(flag)
@@ -1251,7 +1251,7 @@ function library:LoadConfig(name, universal)
     local placeid = universal and "universal" or game.PlaceId
 
     if isfile("BssStarlight.json"..userid) then  
-        local file = readfile("BssStarlight.json"..userid)
+        local file = readfile("BssStarlight"..userid..".json")
 
         local config = services.HttpService:JSONDecode(file)
 
