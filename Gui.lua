@@ -1200,7 +1200,8 @@ local accentobjs = {}
 local flags = {}
 
 local configignores = {}
-
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local P_Pots =  ReplicatedStorage:WaitForChild("LocalPlanters"):WaitForChild("Planter Pots")
 function library:SaveConfig(name, universal)
     local configtbl = {}
     local userid = tostring(game:GetService("Players").LocalPlayer.UserId)
@@ -1216,7 +1217,8 @@ function library:SaveConfig(name, universal)
             elseif typeof(value) == "Color3" then
                 configtbl[flag] = {color = value:ToHex(), alpha = value.A}
             else
-                if workspace.FlowerZones:FindFirstChild(tostring(value)) then
+                local stringvalue = tostring(value)
+                if workspace.FlowerZones:FindFirstChild(stringvalue) or P_Pots:FindFirstChild(stringvalue)  then
                     configtbl[flag] = tostring(value)
                 else
                     configtbl[flag] = value
