@@ -1,5 +1,5 @@
 print("Loading Gui Lib Beta!")
-print('v.1.01a')
+print('v.1.01b')
 
 local drawing = {} do
     local services = setmetatable({}, {
@@ -1481,11 +1481,11 @@ function library.createbox(box, text, callback, finishedcallback)
 
         if not connection then
             connection = utility.connect(services.InputService.InputBegan, function(input)
-                -- if input.UserInputType == Enum.UserInputType.Keyboard then
-                --     if input.KeyCode ~= Enum.KeyCode.Backspace then
+                if input.UserInputType == Enum.UserInputType.Keyboard then
+                    if input.KeyCode ~= Enum.KeyCode.Backspace then
                         local str = services.InputService:GetStringForKeyCode(input.KeyCode)
-                        print(str)
-                        if table.find(allowedcharacters, str) then
+                        print( input.KeyCode)
+                        if table.find(allowedcharacters, str) or input.KeyCode == Enum.KeyCode.LeftControl then
                             keyqueue = keyqueue + 1
                             local currentqueue = keyqueue
                             
