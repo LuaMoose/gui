@@ -1481,8 +1481,8 @@ function library.createbox(box, text, callback, finishedcallback)
 
         if not connection then
             connection = utility.connect(services.InputService.InputBegan, function(input)
-                if input.UserInputType == Enum.UserInputType.Keyboard then
-                    if input.KeyCode ~= Enum.KeyCode.Backspace then
+                -- if input.UserInputType == Enum.UserInputType.Keyboard then
+                --     if input.KeyCode ~= Enum.KeyCode.Backspace then
                         local str = services.InputService:GetStringForKeyCode(input.KeyCode)
 
                         if table.find(allowedcharacters, str) then
@@ -1519,9 +1519,9 @@ function library.createbox(box, text, callback, finishedcallback)
                                         task.wait(0.02)
                                     end
                                 end)()
-                            end
-                        end
-                    end
+                             end
+                    --     end
+                    -- end
 
                     if input.KeyCode == Enum.KeyCode.Return then
                         services.ContextActionService:UnbindAction("disablekeyboard")
@@ -3501,6 +3501,7 @@ function library:Load(options)
                     Size = 13,
                     Position = UDim2.new(0.5, 0, 0, 0),
                     Theme = "Text",
+                    Center = true,
                     ZIndex = 9,
                     Outline = true,
                     Parent = box
