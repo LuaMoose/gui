@@ -1,4 +1,5 @@
 print("Loading Gui Lib Beta!")
+print('v.1.01')
 
 local drawing = {} do
     local services = setmetatable({}, {
@@ -3499,12 +3500,22 @@ function library:Load(options)
                     Font = Drawing.Fonts.Plex,
                     Size = 13,
                     Position = UDim2.new(0.5, 0, 0, 0),
-                    Center = true,
                     Theme = "Text",
                     ZIndex = 9,
                     Outline = true,
                     Parent = box
                 })
+
+                -- local text = utility.create("Text", {
+                --     Text = name,
+                --     Font = Drawing.Fonts.Plex,
+                --     Size = 13,
+                --     Position = UDim2.new(0, 0, 0, 0),
+                --     Theme = "Text",
+                --     ZIndex = 7,
+                --     Outline = true,
+                --     Parent = label,
+                -- })
 
                 local placeholdertext = utility.create("Text", {
                     Text = placeholder,
