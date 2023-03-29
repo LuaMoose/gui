@@ -1269,10 +1269,10 @@ function library:LoadConfig(name, universal)
                 if exist then
                     func(exist)
                     continue
-                else
-                    print(tostring(flag) .." func is nil")
                 end
                 func(v)
+            else
+                print(tostring(flag) .." func is nil")
             end
         end
     end
