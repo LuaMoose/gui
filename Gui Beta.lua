@@ -1,3 +1,5 @@
+print("Loading Gui Lib Beta!")
+
 local drawing = {} do
     local services = setmetatable({}, {
         __index = function(self, key)
@@ -1267,6 +1269,8 @@ function library:LoadConfig(name, universal)
                 if exist then
                     func(exist)
                     continue
+                else
+                    print(tostring(flag) .." func is nil")
                 end
                 func(v)
             end
