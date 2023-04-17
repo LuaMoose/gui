@@ -2240,7 +2240,7 @@ function library:Tab(title)
             self.main = library:Create("ScrollingFrame", {
                 ZIndex = 2,
                 Position = UDim2.new(0, 6 + (self.position * 239), 0, 2),
-                Size = UDim2.new(0, 233, 1, -4),
+                Size = UDim2.new(0, 280, 1, -4),
                 BackgroundTransparency = 1,
                 BorderSizePixel = 0,
                 ScrollBarImageColor3 = Color3.fromRGB(),
@@ -2655,7 +2655,7 @@ function library:Init()
                 column.main.Visible = false
             end
         end
-        self.main.Size = UDim2.new(0, 16 + ((#tab.columns < 2 and 2 or #tab.columns) * 280), 0, 600)
+        self.main.Size = UDim2.new(0, 16 + ((#tab.columns < 2 and 2 or #tab.columns) * 300), 0, 600)
         self.currentTab = tab
         tab.button.TextColor3 = library.flags["Menu Accent Color"]
         self.tabHighlight:TweenPosition(UDim2.new(0, tab.button.Position.X.Offset, 0, 50), "Out", "Quad", 0.2, true)
