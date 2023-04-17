@@ -2239,8 +2239,8 @@ function library:Tab(title)
 
             self.main = library:Create("ScrollingFrame", {
                 ZIndex = 2,
-                Position = UDim2.new(0, 6 + (self.position * 239), 0, 2),
-                Size = UDim2.new(0, 280, 1, -4),
+                Position = UDim2.new(0, 6 + (self.position * 300), 0, 2),
+                Size = UDim2.new(0, 300, 1, -4),
                 BackgroundTransparency = 1,
                 BorderSizePixel = 0,
                 ScrollBarImageColor3 = Color3.fromRGB(),
