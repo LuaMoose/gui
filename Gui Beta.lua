@@ -1,3 +1,6 @@
+
+--Jans ui Lib modifed by Moose#3513 for starlight
+
 -- Modified support for Krnl and others
 
 --LIBRARY START
@@ -17,13 +20,14 @@ getgenv().runService = game:GetService"RunService"
 getgenv().textService = game:GetService"TextService"
 getgenv().inputService = game:GetService"UserInputService"
 getgenv().tweenService = game:GetService"TweenService"
+_G.TextLabels = {}
 
 
-if getgenv().library then
-    getgenv().library:Unload()
-end
+-- if getgenv().library then
+--     getgenv().library:Unload()
+-- end
 
-local library = {design = getgenv().design == "kali" and "kali" or "uwuware", tabs = {}, draggable = true, flags = {}, title = "CheatX", open = false, popup = nil, instances = {}, connections = {}, options = {}, notifications = {}, tabSize = 0, theme = {}, foldername = "cheatx_cnfgs", fileext = ".txt"}
+local library = {design = getgenv().design == "kali" and "kali" or "uwuware", tabs = {}, draggable = true, flags = {["Menu Accent Color"] = Color3.new(0.5996236205101013,0.4471152424812317,0.971744179725647)}, title = "Starlight v1.04 Beta", open = false, popup = nil, instances = {}, connections = {}, options = {}, notifications = {}, tabSize = 0, theme = {}, foldername = "Starlight", fileext = ".json"}
 getgenv().library = library
 
 --Locals
@@ -120,7 +124,14 @@ function library:LoadConfig(config)
                     elseif option.type == "bind" then
                         spawn(function() option:SetKey(Config[option.flag]) end)
                     else
-                        spawn(function() option:SetValue(Config[option.flag]) end)
+                        local Zones = workspace:WaitForChild("FlowerZones")
+                        if Config[option.flag] and Zones:FindFirstChild(Config[option.flag]) then
+                            task.spawn(function() option:SetValue(Zones:FindFirstChild(Config[option.flag])) end)
+
+                            continue
+                        end
+
+                        task.spawn(function() option:SetValue(Config[option.flag]) end)
                     end
                 end
             end
@@ -188,7 +199,7 @@ library.createLabel = function(option, parent)
         TextWrapped = true,
         Parent = parent
     })
-
+    _G.TextLabels[option.text] = option.main
     setmetatable(option, {__newindex = function(t, i, v)
         if i == "Text" then
             option.main.Text = tostring(v)
@@ -196,6 +207,7 @@ library.createLabel = function(option, parent)
         end
     end})
     option.Text = option.text
+    return option.main
 end
 
 library.createDivider = function(option, parent)
@@ -241,6 +253,7 @@ library.createDivider = function(option, parent)
         end
     end})
     option.Text = option.text
+    return option.main
 end
 
 library.createToggle = function(option, parent)
@@ -853,7 +866,8 @@ library.createList = function(option, parent)
     local function getMultiText()
         local s = ""
         for _, value in next, option.values do
-            s = s .. (option.value[value] and (tostring(value) .. ", ") or "")
+            print(option.value)
+            s = s .. (option.value and (tostring(value) .. ", ") or "")
         end
         return string.sub(s, 1, #s - 2)
     end
@@ -1048,7 +1062,7 @@ library.createList = function(option, parent)
             ZIndex = 4,
             Size = UDim2.new(1, 0, 0, 20),
             BackgroundTransparency = 1,
-            Text = value,
+            Text = tostring(value),
             TextSize = 15,
             Font = Enum.Font.Code,
             TextTransparency = self.multiselect and (self.value[value] and 1 or 0) or self.value == value and 1 or 0,
@@ -1062,7 +1076,7 @@ library.createList = function(option, parent)
             ZIndex = 4,	
             Size = UDim2.new(1, 0, 1, 0),
             BackgroundTransparency = 0.8,
-            Text = " " ..value,
+            Text = " " ..tostring(value),
             TextSize = 15,
             Font = Enum.Font.Code,
             TextColor3 = library.flags["Menu Accent Color"],
@@ -1087,7 +1101,7 @@ library.createList = function(option, parent)
     end
 
     for i, value in next, option.values do
-        option:AddValue(tostring(typeof(i) == "number" and value or i))
+        option:AddValue(typeof(i) == "number" and value or i)
     end
 
     function option:RemoveValue(value)
@@ -1116,9 +1130,9 @@ library.createList = function(option, parent)
                 value[v] = false
             end
         end
-        self.value = typeof(value) == "table" and value or tostring(table.find(self.values, value) and value or self.values[1])
-        library.flags[self.flag] = self.value
-        option.listvalue.Text = " " .. (self.multiselect and getMultiText() or self.value)
+        self.value = typeof(value) == "table" and value or table.find(self.values, value) and value or self.values[1]
+        library.flags[self.flag] = tostring(self.value)
+        option.listvalue.Text = " " .. tostring(self.multiselect and getMultiText() or self.value)
         if self.multiselect then
             for name, label in next, self.labels do
                 label.TextTransparency = self.value[name] and 1 or 0
@@ -1147,7 +1161,7 @@ library.createList = function(option, parent)
     end
     delay(1, function()
         if library then
-            option:SetValue(option.value)
+            option:SetValue("None")
         end
     end)
 
@@ -1228,7 +1242,7 @@ library.createBox = function(option, parent)
         Position = UDim2.new(0, 4, 0, 0),
         Size = UDim2.new(1, -4, 1, 0),
         BackgroundTransparency = 1,
-        Text = "  " .. option.value,
+        Text = option.Placeholder,
         TextSize = 15,
         Font = Enum.Font.Code,
         TextColor3 = Color3.new(1, 1, 1),
@@ -1289,11 +1303,16 @@ library.createBox = function(option, parent)
             self.callback(value, enter)
         end
     end
-    delay(1, function()
+
+    function option:Get()
+        return inputvalue.Text
+    end
+    task.delay(1, function()
         if library then
             option:SetValue(option.value)
         end
     end)
+    
 end
 
 library.createColorPickerWindow = function(option)
@@ -1767,15 +1786,16 @@ function library:Tab(title)
                 option.position = #self.options
                 option.canInit = true
                 table.insert(self.options, option)
-
+                local textLabel = nil
                 if library.hasInit and self.hasInit then
-                    library.createLabel(option, self.content)
+                    textLabel = library.createLabel(option, self.content)
                 else
                     option.Init = library.createLabel
                 end
 
 				function option:Set(value)
-					option.text = value
+                    if not _G.TextLabels[option.text] then return end
+					_G.TextLabels[option.text].Text =value
 				end
 
                 return option
@@ -1850,7 +1870,7 @@ function library:Tab(title)
                 end
 
 				function option:Set(v)
-					option.state = v
+					option:SetState(v)
 				end
 				
 				function option:Get()
@@ -1967,7 +1987,7 @@ function library:Tab(title)
 				end
 
 				function option:Set(v)
-					option.value =v
+					option:SetValue(v)
 				end
 
                 function option:AddBind(subOption)
@@ -1990,13 +2010,14 @@ function library:Tab(title)
 
             function section:Dropdown(option)
 				option = lowerTable(option)
+                table.insert(option.content, "None")
                 option.section = self
                 option.text = tostring(option.name)
                 option.values = typeof(option.content) == "table" and option.content or {}
                 option.callback = typeof(option.callback) == "function" and option.callback or function() end
                 option.multiselect = typeof(option.multiselect) == "boolean" and option.multiselect or false
                 --option.groupbox = (not option.multiselect) and (typeof(option.groupbox) == "boolean" and option.groupbox or false)
-                option.value = option.multiselect and (typeof(option.value) == "table" and option.value or {}) or tostring(option.value or option.values[1] or "")
+                option.value = option.multiselect and (typeof(option.value) == "table" and option.value or {}) or option.value or "None" or ""
                 if option.multiselect then
                     for i,v in next, option.values do
                         option.value[v] = false
@@ -2028,7 +2049,7 @@ function library:Tab(title)
 				end
 
 				function option:Set(v)
-					option.value = v
+					option:SetValue(v)
 				end
 
                 function option:AddColor(subOption)
@@ -2058,11 +2079,11 @@ function library:Tab(title)
                 return option
             end
 
-            function section:AddBox(option)
-                option = typeof(option) == "table" and option or {}
+            function section:CreateInput(option)
+                option = lowerTable(option)
                 option.section = self
-                option.text = tostring(option.text)
-                option.value = tostring(option.value or "")
+                option.text = tostring(option.Name)
+                option.value = tostring(option.placeholder or "")
                 option.callback = typeof(option.callback) == "function" and option.callback or function() end
                 option.type = "box"
                 option.position = #self.options
@@ -2078,6 +2099,8 @@ function library:Tab(title)
                 else
                     option.Init = library.createBox
                 end
+
+            
 
                 return option
             end
@@ -2258,6 +2281,7 @@ function library:Tab(title)
         end
 
         return column
+   
     end
 
     function tab:Init()
@@ -2277,7 +2301,7 @@ function library:Tab(title)
             ClipsDescendants = true,
             Parent = library.main
         })
-        library.tabSize = library.tabSize + size
+        library.tabSize = library.tabSize + size-7
 
         self.button.InputBegan:connect(function(input)
             if input.UserInputType.Name == "MouseButton1" then
@@ -2296,7 +2320,9 @@ function library:Tab(title)
         tab:Init()
     end
 
-    return tab:AddColumn()
+    return tab
+
+
 
 end
 
@@ -2639,22 +2665,22 @@ function library:Init()
         end
     end
 
-    spawn(function()
-        while library do
-            wait(1)
-            local Configs = self:GetConfigs()
-            for _, config in next, Configs do
-                if not table.find(self.options["Config List"].values, config) then
-                    self.options["Config List"]:AddValue(config)
-                end
-            end
-            for _, config in next, self.options["Config List"].values do
-                if not table.find(Configs, config) then
-                    self.options["Config List"]:RemoveValue(config)
-                end
-            end
-        end
-    end)
+    -- task.spawn(function()
+    --     while library do
+    --         task.wait(1)
+    --         local Configs = self:GetConfigs()
+    --         for _, config in next, Configs do
+    --             if not table.find(self.options["Config List"].values, config) then
+    --                 self.options["Config List"]:AddValue(config)
+    --             end
+    --         end
+    --         for _, config in next, self.options["Config List"].values do
+    --             if not table.find(Configs, config) then
+    --                 self.options["Config List"]:RemoveValue(config)
+    --             end
+    --         end
+    --     end
+    -- end)
 
     for _, tab in next, self.tabs do
         if tab.canInit then
