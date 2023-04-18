@@ -129,7 +129,7 @@ function library:LoadConfig(config)
                         print( Zones:FindFirstChild(Config[option.flag]))
                         if Config[option.flag] and Zones:FindFirstChild(Config[option.flag]) then
                             task.spawn(function() option:SetValue(Zones:FindFirstChild(Config[option.flag])) end)
-
+                            print('ranfnfnsifsdiuhgsiuhgsuihgdsiuhgidsuhgsidhgids')
                             continue
                         end
 
