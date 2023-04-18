@@ -160,7 +160,7 @@ function library:SaveConfig(config)
                     Config[option.flag] = option.key
                 end
             elseif option.type == "list" then
-                Config[option.flag] = option.value
+                Config[option.flag] = tostring(option.value)
             else
                 Config[option.flag] = option.value
             end
