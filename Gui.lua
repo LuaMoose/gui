@@ -5,7 +5,7 @@
 
 --LIBRARY START
 --Services
-
+local loaded=  false
 local function lowerTable(t)
 	local Table ={}
 	
@@ -27,7 +27,7 @@ _G.TextLabels = {}
 --     getgenv().library:Unload()
 -- end
 
-local library = {design = getgenv().design == "kali" and "kali" or "uwuware", tabs = {}, draggable = true, flags = {["Menu Accent Color"] = Color3.new(0.5996236205101013,0.4471152424812317,0.971744179725647)}, title = "Starlight v1.04 Beta", open = false, popup = nil, instances = {}, connections = {}, options = {}, notifications = {}, tabSize = 0, theme = {}, foldername = "Starlight", fileext = ".json"}
+local library = {design = getgenv().design == "kali" and "kali" or "uwuware", tabs = {}, draggable = true, flags = {["Menu Accent Color"] = Color3.new(0.5996236205101013,0.4471152424812317,0.971744179725647)}, title = "Starlight v1.045 Beta", open = false, popup = nil, instances = {}, connections = {}, options = {}, notifications = {}, tabSize = 0, theme = {}, foldername = "Starlight", fileext = ".json"}
 getgenv().library = library
 
 --Locals
@@ -111,6 +111,7 @@ function library:LoadConfig(config)
         Config = Read and Config or {}
         for _, option in next, self.options do
             if option.hasInit then
+                loaded =true
                 if option.type ~= "button" and option.flag and not option.skipflag then
                     if option.type == "toggle" then
                         spawn(function() option:SetState(Config[option.flag] == 1) end)
@@ -125,9 +126,10 @@ function library:LoadConfig(config)
                         spawn(function() option:SetKey(Config[option.flag]) end)
                     else
                         local Zones = workspace:WaitForChild("FlowerZones")
-                        if Config[option.flag] and Zones:FindFirstChild(Config[option.flag]) then
-                            task.spawn(function() option:SetValue(Zones:FindFirstChild(Config[option.flag])) end)
+                        local PlanterPotsFolder = game.ReplicatedStorage:WaitForChild("LocalPlanters"):WaitForChild("Planter Pots")
 
+                        if Config[option.flag] and Zones:FindFirstChild(Config[option.flag]) or Config[option.flag] and PlanterPotsFolder:FindFirstChild(Config[option.flag])  then
+                            task.spawn(function() option:SetValue(Zones:FindFirstChild(Config[option.flag])) end)
                             continue
                         end
 
@@ -866,7 +868,6 @@ library.createList = function(option, parent)
     local function getMultiText()
         local s = ""
         for _, value in next, option.values do
-            print(option.value)
             s = s .. (option.value and (tostring(value) .. ", ") or "")
         end
         return string.sub(s, 1, #s - 2)
@@ -1130,6 +1131,7 @@ library.createList = function(option, parent)
                 value[v] = false
             end
         end
+      
         self.value = typeof(value) == "table" and value or table.find(self.values, value) and value or self.values[1]
         library.flags[self.flag] = tostring(self.value)
         option.listvalue.Text = " " .. tostring(self.multiselect and getMultiText() or self.value)
@@ -1160,7 +1162,7 @@ library.createList = function(option, parent)
         end
     end
     delay(1, function()
-        if library then
+        if library and not loaded then
             option:SetValue("None")
         end
     end)
@@ -2239,8 +2241,8 @@ function library:Tab(title)
 
             self.main = library:Create("ScrollingFrame", {
                 ZIndex = 2,
-                Position = UDim2.new(0, 6 + (self.position * 239), 0, 2),
-                Size = UDim2.new(0, 233, 1, -4),
+                Position = UDim2.new(0, 6 + (self.position * 300), 0, 2),
+                Size = UDim2.new(0, 300, 1, -4),
                 BackgroundTransparency = 1,
                 BorderSizePixel = 0,
                 ScrollBarImageColor3 = Color3.fromRGB(),
@@ -2655,7 +2657,7 @@ function library:Init()
                 column.main.Visible = false
             end
         end
-        self.main.Size = UDim2.new(0, 16 + ((#tab.columns < 2 and 2 or #tab.columns) * 239), 0, 600)
+        self.main.Size = UDim2.new(0, 16 + ((#tab.columns < 2 and 2 or #tab.columns) * 300), 0, 600)
         self.currentTab = tab
         tab.button.TextColor3 = library.flags["Menu Accent Color"]
         self.tabHighlight:TweenPosition(UDim2.new(0, tab.button.Position.X.Offset, 0, 50), "Out", "Quad", 0.2, true)
