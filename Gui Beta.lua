@@ -1132,7 +1132,7 @@ library.createList = function(option, parent)
             end
         end
       
-        self.value = typeof(value) == "table" and value or table.find(self.values, value) and value or self.values[1]
+        self.value = typeof(value) == "table" and value or table.find(self.values, value) and value or "None"
         library.flags[self.flag] = tostring(self.value)
         option.listvalue.Text = " " .. tostring(self.multiselect and getMultiText() or self.value)
         if self.multiselect then
@@ -1161,11 +1161,6 @@ library.createList = function(option, parent)
             self.callback(self.value)
         end
     end
-    delay(1, function()
-        if library and not loaded then
-            option:SetValue("None")
-        end
-    end)
 
     function option:Close()
         library.popup = nil
