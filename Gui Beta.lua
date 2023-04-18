@@ -126,6 +126,7 @@ function library:LoadConfig(config)
                     else
                         local Zones = workspace:WaitForChild("FlowerZones")
                         print(Config[option.flag])
+                        print( Zones:FindFirstChild(Config[option.flag]))
                         if Config[option.flag] and Zones:FindFirstChild(Config[option.flag]) then
                             task.spawn(function() option:SetValue(Zones:FindFirstChild(Config[option.flag])) end)
 
@@ -867,7 +868,6 @@ library.createList = function(option, parent)
     local function getMultiText()
         local s = ""
         for _, value in next, option.values do
-            print(option.value)
             s = s .. (option.value and (tostring(value) .. ", ") or "")
         end
         return string.sub(s, 1, #s - 2)
