@@ -126,11 +126,10 @@ function library:LoadConfig(config)
                         spawn(function() option:SetKey(Config[option.flag]) end)
                     else
                         local Zones = workspace:WaitForChild("FlowerZones")
-                        print(Config[option.flag])
-                        print( Zones:FindFirstChild(Config[option.flag]))
-                        if Config[option.flag] and Zones:FindFirstChild(Config[option.flag]) then
+                        local PlanterPotsFolder = ReplicatedStorage:WaitForChild("LocalPlanters"):WaitForChild("Planter Pots")
+
+                        if Config[option.flag] and Zones:FindFirstChild(Config[option.flag]) or Config[option.flag] and PlanterPotsFolder:FindFirstChild(Config[option.flag])  then
                             task.spawn(function() option:SetValue(Zones:FindFirstChild(Config[option.flag])) end)
-                            print('ranfnfnsifsdiuhgsiuhgsuihgdsiuhgidsuhgsidhgids')
                             continue
                         end
 
