@@ -448,11 +448,7 @@ library.createToggle = function(option, parent)
     end
 
     if option.state ~= nil then
-        delay(1, function()
-            if library then
-                option.callback(option.state)
-            end
-        end)
+        
     end
 
     setmetatable(option, {__newindex = function(t, i, v)
@@ -829,11 +825,6 @@ library.createSlider = function(option, parent)
             self.callback(value)
         end
     end
-    delay(1, function()
-        if library then
-            option:SetValue(option.value)
-        end
-    end)
 end
 
 library.createList = function(option, parent)
@@ -1118,7 +1109,7 @@ library.createList = function(option, parent)
                 table.remove(self.values, table.find(self.values, value))
                 if self.value == value then
                     selected = nil
-                    self:SetValue(self.values[1] or "")
+                    self:SetValue("None")
                 end
             end
         end
@@ -1304,11 +1295,6 @@ library.createBox = function(option, parent)
     function option:Get()
         return inputvalue.Text
     end
-    task.delay(1, function()
-        if library then
-            option:SetValue(option.value)
-        end
-    end)
     
 end
 
