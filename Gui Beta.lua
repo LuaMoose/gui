@@ -5,7 +5,7 @@
 
 --LIBRARY START
 --Services
-
+local loaded=  false
 local function lowerTable(t)
 	local Table ={}
 	
@@ -111,6 +111,7 @@ function library:LoadConfig(config)
         Config = Read and Config or {}
         for _, option in next, self.options do
             if option.hasInit then
+                loaded =true
                 if option.type ~= "button" and option.flag and not option.skipflag then
                     if option.type == "toggle" then
                         spawn(function() option:SetState(Config[option.flag] == 1) end)
@@ -1133,7 +1134,6 @@ library.createList = function(option, parent)
         end
       
         self.value = typeof(value) == "table" and value or table.find(self.values, value) and value or self.values[1]
-        print(tostring(self.value), "yo")
         library.flags[self.flag] = tostring(self.value)
         option.listvalue.Text = " " .. tostring(self.multiselect and getMultiText() or self.value)
         if self.multiselect then
@@ -1163,7 +1163,7 @@ library.createList = function(option, parent)
         end
     end
     delay(1, function()
-        if library then
+        if library and not loaded then
             option:SetValue("None")
         end
     end)
