@@ -1125,6 +1125,7 @@ library.createList = function(option, parent)
     end
 
     function option:SetValue(value, nocallback)
+        print(value.." kys wilsssssssssssssssssssssssssssssssss")
         if self.multiselect and typeof(value) ~= "table" then
             value = {}
             for i,v in next, self.values do
