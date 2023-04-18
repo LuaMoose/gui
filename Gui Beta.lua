@@ -1125,13 +1125,15 @@ library.createList = function(option, parent)
     end
 
     function option:SetValue(value, nocallback)
-        print(value.." kys wilsssssssssssssssssssssssssssssssss")
+        print(tostring(value).." kys wilsssssssssssssssssssssssssssssssss")
         if self.multiselect and typeof(value) ~= "table" then
             value = {}
             for i,v in next, self.values do
                 value[v] = false
             end
         end
+        print(table.find(self.values, value))
+        print(typeof(value) == "table" and value or table.find(self.values, value) and value or self.values[1])
         self.value = typeof(value) == "table" and value or table.find(self.values, value) and value or self.values[1]
         library.flags[self.flag] = tostring(self.value)
         option.listvalue.Text = " " .. tostring(self.multiselect and getMultiText() or self.value)
