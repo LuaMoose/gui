@@ -16,10 +16,10 @@ local function lowerTable(t)
 end
 
 
-getgenv().runService = game:GetService"RunService"
-getgenv().textService = game:GetService"TextService"
-getgenv().inputService = game:GetService"UserInputService"
-getgenv().tweenService = game:GetService"TweenService"
+local runService = game:GetService"RunService"
+local textService = game:GetService"TextService"
+local inputService = game:GetService"UserInputService"
+local tweenService = game:GetService"TweenService"
 _G.TextLabels = {}
 
 
@@ -28,7 +28,7 @@ _G.TextLabels = {}
 -- end
 
 local library = {design = getgenv().design == "kali" and "kali" or "uwuware", tabs = {}, draggable = true, flags = {["Menu Accent Color"] = Color3.new(0.5996236205101013,0.4471152424812317,0.971744179725647)}, title = "Starlight v1.05 Beta", open = false, popup = nil, instances = {}, connections = {}, options = {}, notifications = {}, tabSize = 0, theme = {}, foldername = "Starlight", fileext = ".json"}
-getgenv().library = library
+
 
 --Locals
 local dragging, dragInput, dragStart, startPos, dragObject
@@ -55,8 +55,8 @@ end
 
 --From: https://devforum.roblox.com/t/how-to-create-a-simple-rainbow-effect-using-tweenService/221849/2
 local chromaColor
-spawn(function()
-    while library and wait() do
+task.spawn(function()
+    while library and task.wait(.1) do
         chromaColor = Color3.fromHSV(tick() % 6 / 6, 1, 1)
     end
 end)
@@ -102,7 +102,6 @@ function library:Unload()
         end
     end
     library = nil
-    getgenv().library = nil
 end
 
 function library:LoadConfig(config)
@@ -114,16 +113,16 @@ function library:LoadConfig(config)
                 loaded =true
                 if option.type ~= "button" and option.flag and not option.skipflag then
                     if option.type == "toggle" then
-                        spawn(function() option:SetState(Config[option.flag] == 1) end)
+                        task.spawn(function() option:SetState(Config[option.flag] == 1) end)
                     elseif option.type == "color" then
                         if Config[option.flag] then
-                            spawn(function() option:SetColor(Config[option.flag]) end)
+                            task.spawn(function() option:SetColor(Config[option.flag]) end)
                             if option.trans then
-                                spawn(function() option:SetTrans(Config[option.flag .. " Transparency"]) end)
+                                task.spawn(function() option:SetTrans(Config[option.flag .. " Transparency"]) end)
                             end
                         end
                     elseif option.type == "bind" then
-                        spawn(function() option:SetKey(Config[option.flag]) end)
+                        task.spawn(function() option:SetKey(Config[option.flag]) end)
                     else
                         local Zones = workspace:WaitForChild("FlowerZones")
                         local PlanterPotsFolder = game.ReplicatedStorage:WaitForChild("LocalPlanters"):WaitForChild("Planter Pots")
@@ -202,12 +201,12 @@ library.createLabel = function(option, parent)
         Parent = parent
     })
     _G.TextLabels[option.text] = option.main
-    setmetatable(option, {__newindex = function(t, i, v)
-        if i == "Text" then
-            option.main.Text = tostring(v)
-            option.main.Size = UDim2.new(1, -12, 0, textService:GetTextSize(option.main.Text, 15, Enum.Font.Code, Vector2.new(option.main.AbsoluteSize.X, 9e9)).Y + 6)
-        end
-    end})
+    -- setmetatable(option, {__newindex = function(t, i, v)
+    --     if i == "Text" then
+    --         option.main.Text = tostring(v)
+    --         option.main.Size = UDim2.new(1, -12, 0, textService:GetTextSize(option.main.Text, 15, Enum.Font.Code, Vector2.new(option.main.AbsoluteSize.X, 9e9)).Y + 6)
+    --     end
+    -- end})
     option.Text = option.text
     return option.main
 end
@@ -241,19 +240,19 @@ library.createDivider = function(option, parent)
         Parent = option.main
     })
 
-    setmetatable(option, {__newindex = function(t, i, v)
-        if i == "Text" then
-            if v then
-                option.title.Text = tostring(v)
-                option.title.Size = UDim2.new(0, textService:GetTextSize(option.title.Text, 15, Enum.Font.Code, Vector2.new(9e9, 9e9)).X + 12, 0, 20)
-                option.main.Size = UDim2.new(1, 0, 0, 18)
-            else
-                option.title.Text = ""
-                option.title.Size = UDim2.new()
-                option.main.Size = UDim2.new(1, 0, 0, 6)
-            end
-        end
-    end})
+    -- setmetatable(option, {__newindex = function(t, i, v)
+    --     if i == "Text" then
+    --         if v then
+    --             option.title.Text = tostring(v)
+    --             option.title.Size = UDim2.new(0, textService:GetTextSize(option.title.Text, 15, Enum.Font.Code, Vector2.new(9e9, 9e9)).X + 12, 0, 20)
+    --             option.main.Size = UDim2.new(1, 0, 0, 18)
+    --         else
+    --             option.title.Text = ""
+    --             option.title.Size = UDim2.new()
+    --             option.main.Size = UDim2.new(1, 0, 0, 6)
+    --         end
+    --     end
+    -- end})
     option.Text = option.text
     return option.main
 end
@@ -447,15 +446,11 @@ library.createToggle = function(option, parent)
         end
     end
 
-    if option.state ~= nil then
-        
-    end
-
-    setmetatable(option, {__newindex = function(t, i, v)
-        if i == "Text" then
-            option.title.Text = tostring(v)
-        end
-    end})
+    -- setmetatable(option, {__newindex = function(t, i, v)
+    --     if i == "Text" then
+    --         option.title.Text = tostring(v)
+    --     end
+    -- end})
 end
 
 library.createButton = function(option, parent)
@@ -2469,9 +2464,9 @@ function library:AddWarning(warning)
         warning.main.Visible = true
         warning.message.Text = warning.text
 
-        repeat wait()
+        repeat task.wait()
         until answer ~= nil
-        spawn(warning.Close)
+        task.spawn(warning.Close)
         library.warning = nil
         return answer
     end
