@@ -2752,5 +2752,4 @@ local function promptLib()
         return Prompt,Screen
     end
 end 
-
---LIBRARY END
+return library
