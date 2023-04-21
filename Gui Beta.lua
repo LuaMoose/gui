@@ -809,7 +809,7 @@ library.createSlider = function(option, parent)
         value = math.clamp(value, self.min, self.max)
         if KRNL_LOADED then
             if self.min >= 0 then
-                option.fill.Size =UDim2.new((value - self.min) / (self.max - self.min)
+                option.fill.Size =UDim2.new((value - self.min) / (self.max - self.min))
             else
                 option.fill.Position = UDim2.new((0 - self.min) / (self.max - self.min))
                 option.fill.Size = UDim2.new(value / (self.max - self.min))
