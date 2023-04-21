@@ -807,23 +807,12 @@ library.createSlider = function(option, parent)
         if typeof(value) ~= "number" then value = 0 end
         value = library.round(value, option.float)
         value = math.clamp(value, self.min, self.max)
-        if KRNL_LOADED then
-            if self.min >= 0 then
-                option.fill.Size =UDim2.new((value - self.min) / (self.max - self.min))
-            else
-                option.fill.Position = UDim2.new((0 - self.min) / (self.max - self.min))
-                option.fill.Size = UDim2.new(value / (self.max - self.min))
-            end
+        if self.min >= 0 then
+            option.fill:TweenSize(UDim2.new((value - self.min) / (self.max - self.min), 0, 1, 0), "Out", "Quad", 0.05, true)
         else
-            if self.min >= 0 then
-                option.fill:TweenSize(UDim2.new((value - self.min) / (self.max - self.min), 0, 1, 0), "Out", "Quad", 0.05, true)
-            else
-                option.fill:TweenPosition(UDim2.new((0 - self.min) / (self.max - self.min), 0, 0, 0), "Out", "Quad", 0.05, true)
-                option.fill:TweenSize(UDim2.new(value / (self.max - self.min), 0, 1, 0), "Out", "Quad", 0.1, true)
-            end
+            option.fill:TweenPosition(UDim2.new((0 - self.min) / (self.max - self.min), 0, 0, 0), "Out", "Quad", 0.05, true)
+            option.fill:TweenSize(UDim2.new(value / (self.max - self.min), 0, 1, 0), "Out", "Quad", 0.1, true)
         end
-
-       
         library.flags[self.flag] = value
         self.value = value
         option.title.Text = (option.text == "nil" and "" or option.text .. ": ") .. option.value .. option.suffix
@@ -2644,18 +2633,11 @@ function library:Init()
                 column.main.Visible = false
             end
         end
-    
         self.main.Size = UDim2.new(0, 16 + ((#tab.columns < 2 and 2 or #tab.columns) * 300), 0, 600)
         self.currentTab = tab
         tab.button.TextColor3 = library.flags["Menu Accent Color"]
-        if KRNL_LOADED then
-            self.tabHighlight.Position = UDim2.new(0, tab.button.Position.X.Offset, 0, 50)
-            self.tabHighlight.Size = UDim2.new(0, tab.button.AbsoluteSize.X, 0, -1)
-        else
-            self.tabHighlight:TweenPosition(UDim2.new(0, tab.button.Position.X.Offset, 0, 50), "Out", "Quad", 0.2, true)
-            self.tabHighlight:TweenSize(UDim2.new(0, tab.button.AbsoluteSize.X, 0, -1), "Out", "Quad", 0.1, true)
-        end
-       
+        self.tabHighlight:TweenPosition(UDim2.new(0, tab.button.Position.X.Offset, 0, 50), "Out", "Quad", 0.2, true)
+        self.tabHighlight:TweenSize(UDim2.new(0, tab.button.AbsoluteSize.X, 0, -1), "Out", "Quad", 0.1, true)
         for _, column in next, tab.columns do
             column.main.Visible = true
         end
