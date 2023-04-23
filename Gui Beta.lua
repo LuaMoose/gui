@@ -1248,6 +1248,9 @@ library.createBox = function(option, parent)
         if input.UserInputType.Name == "MouseButton1" then
             inputvalue.Text = ""
         end
+        if input.KeyCode == Enum.KeyCode.Return then
+            print('detected')
+        end
         if input.UserInputType.Name == "MouseMovement" then
             if not library.warning and not library.slider then
                 option.holder.BorderColor3 = library.flags["Menu Accent Color"]
