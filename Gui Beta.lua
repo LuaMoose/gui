@@ -1778,6 +1778,7 @@ function library:Tab(title)
                     if not _G.TextLabels[option.text] then return end
 					_G.TextLabels[option.text].Text =value
 				end
+                option:Set(text)
 
                 return option
             end
