@@ -208,6 +208,7 @@ library.createLabel = function(option, parent)
     --     end
     -- end})
     option.Text = option.text
+    option.main.Text = option.text
     return option.main
 end
 
