@@ -27,7 +27,7 @@ _G.TextLabels = {}
 --     getgenv().library:Unload()
 -- end
 
-local library = {design = getgenv().design == "kali" and "kali" or "uwuware", tabs = {}, draggable = true, flags = {["Menu Accent Color"] = Color3.new(0.5996236205101013,0.4471152424812317,0.971744179725647)}, title = "Starlight v1.05 Beta", open = false, popup = nil, instances = {}, connections = {}, options = {}, notifications = {}, tabSize = 0, theme = {}, foldername = game.Players.LocalPlayer.Name, fileext = ".json"}
+local library = {design = getgenv().design == "kali" and "kali" or "uwuware", tabs = {}, draggable = true, flags = {["Menu Accent Color"] = Color3.new(0.5996236205101013,0.4471152424812317,0.971744179725647)}, title = "Starlight v1.05 Beta", open = false, popup = nil, instances = {}, connections = {}, options = {}, notifications = {}, tabSize = 0, theme = {}, foldername = "Starlight", fileext = ".json"}
 
 
 --Locals
