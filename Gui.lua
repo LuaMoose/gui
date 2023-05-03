@@ -27,7 +27,7 @@ _G.TextLabels = {}
 --     getgenv().library:Unload()
 -- end
 
-local library = {design = getgenv().design == "kali" and "kali" or "uwuware", tabs = {}, draggable = true, flags = {["Menu Accent Color"] = Color3.new(0.5996236205101013,0.4471152424812317,0.971744179725647)}, title = "Starlight v1.051 Beta", open = false, popup = nil, instances = {}, connections = {}, options = {}, notifications = {}, tabSize = 0, theme = {}, foldername = "Starlight", fileext = ".json"}
+local library = {design = getgenv().design == "kali" and "kali" or "uwuware", tabs = {}, draggable = true, flags = {["Menu Accent Color"] = Color3.new(0.5996236205101013,0.4471152424812317,0.971744179725647)}, title = "Starlight v1.052 Beta", open = false, popup = nil, instances = {}, connections = {}, options = {}, notifications = {}, tabSize = 0, theme = {}, foldername = "Starlight", fileext = ".json"}
 
 
 --Locals
@@ -208,6 +208,7 @@ library.createLabel = function(option, parent)
     --     end
     -- end})
     option.Text = option.text
+    option.main.Text = option.text
     return option.main
 end
 
@@ -1248,6 +1249,9 @@ library.createBox = function(option, parent)
         if input.UserInputType.Name == "MouseButton1" then
             inputvalue.Text = ""
         end
+        if input.KeyCode == Enum.KeyCode.Return then
+            print('detected')
+        end
         if input.UserInputType.Name == "MouseMovement" then
             if not library.warning and not library.slider then
                 option.holder.BorderColor3 = library.flags["Menu Accent Color"]
@@ -1775,6 +1779,7 @@ function library:Tab(title)
                     if not _G.TextLabels[option.text] then return end
 					_G.TextLabels[option.text].Text =value
 				end
+                option:Set(text)
 
                 return option
             end
