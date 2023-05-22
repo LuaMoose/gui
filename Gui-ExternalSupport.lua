@@ -1,4 +1,3 @@
-
 --Jans ui Lib modifed by Moose#3513 for starlight
 
 -- Modified support for Krnl and others
@@ -2501,6 +2500,8 @@ function library:Init()
     elseif syn then
         pcall(function() self.base.RobloxLocked = true end)
         self.base.Parent = game:GetService"CoreGui"
+    else
+        self.base.Parent = game:GetService"CoreGui"
     end
 
     self.main = self:Create("ImageButton", {
@@ -2754,4 +2755,5 @@ local function promptLib()
         return Prompt,Screen
     end
 end 
+
 return library
