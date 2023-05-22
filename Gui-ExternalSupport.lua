@@ -393,12 +393,10 @@ library.createToggle = function(option, parent)
             if not library.warning and not library.slider then
                 if option.style then
                     tickbox.ImageColor3 = library.flags["Menu Accent Color"]
-                    --tweenService:Create(tickbox, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {ImageColor3 = library.flags["Menu Accent Color"]}):Play()
                 else
                     tickbox.BorderColor3 = library.flags["Menu Accent Color"]
                     tickboxOverlay.BorderColor3 = library.flags["Menu Accent Color"]
-                    --tweenService:Create(tickbox, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BorderColor3 = library.flags["Menu Accent Color"]}):Play()
-                    --tweenService:Create(tickboxOverlay, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BorderColor3 = library.flags["Menu Accent Color"]}):Play()
+                   
                 end
             end
             if option.tip then
@@ -420,12 +418,10 @@ library.createToggle = function(option, parent)
         if input.UserInputType.Name == "MouseMovement" then
             if option.style then
                 tickbox.ImageColor3 = Color3.new()
-                --tweenService:Create(tickbox, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {ImageColor3 = Color3.new()}):Play()
             else
                 tickbox.BorderColor3 = Color3.new()
                 tickboxOverlay.BorderColor3 = Color3.new()
-                --tweenService:Create(tickbox, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BorderColor3 = Color3.new()}):Play()
-                --tweenService:Create(tickboxOverlay, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BorderColor3 = Color3.new()}):Play()
+             
             end
             library.tooltip.Position = UDim2.new(2)
         end
@@ -809,10 +805,10 @@ library.createSlider = function(option, parent)
         value = library.round(value, option.float)
         value = math.clamp(value, self.min, self.max)
         if self.min >= 0 then
-            option.fill:TweenSize(UDim2.new((value - self.min) / (self.max - self.min), 0, 1, 0), "Out", "Quad", 0.05, true)
+            option.fill.Size = UDim2.new((value - self.min) / (self.max - self.min), 0, 1, 0)
         else
-            option.fill:TweenPosition(UDim2.new((0 - self.min) / (self.max - self.min), 0, 0, 0), "Out", "Quad", 0.05, true)
-            option.fill:TweenSize(UDim2.new(value / (self.max - self.min), 0, 1, 0), "Out", "Quad", 0.1, true)
+            option.fill.Position = UDim2.new((0 - self.min) / (self.max - self.min), 0, 0, 0)
+            option.fill.Size = UDim2.new(value / (self.max - self.min), 0, 1, 0)
         end
         library.flags[self.flag] = value
         self.value = value
@@ -2641,8 +2637,9 @@ function library:Init()
         self.main.Size = UDim2.new(0, 16 + ((#tab.columns < 2 and 2 or #tab.columns) * 300), 0, 600)
         self.currentTab = tab
         tab.button.TextColor3 = library.flags["Menu Accent Color"]
-        self.tabHighlight:TweenPosition(UDim2.new(0, tab.button.Position.X.Offset, 0, 50), "Out", "Quad", 0.2, true)
-        self.tabHighlight:TweenSize(UDim2.new(0, tab.button.AbsoluteSize.X, 0, -1), "Out", "Quad", 0.1, true)
+
+        self.tabHighlight.Position = UDim2.new(0, tab.button.Position.X.Offset, 0, 50)
+        self.tabHighlight.Size =UDim2.new(0, tab.button.AbsoluteSize.X, 0, -1)
         for _, column in next, tab.columns do
             column.main.Visible = true
         end
@@ -2691,7 +2688,7 @@ function library:Init()
         if input == dragInput and dragging and library.draggable then
             local delta = input.Position - dragStart
             local yPos = (startPos.Y.Offset + delta.Y) < -36 and -36 or startPos.Y.Offset + delta.Y
-            dragObject:TweenPosition(UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, yPos), "Out", "Quint", 0.1, true)
+            dragObject.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, yPos)
         end
     end)
 
