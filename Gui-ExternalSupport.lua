@@ -2133,7 +2133,7 @@ function library:Tab(title)
             end
 
             function section:Init()
-                if self.hasInit then return end
+                if self.hasInit then print("Returned") return end
                 self.hasInit = true
 
                 self.main = library:Create("Frame", {
