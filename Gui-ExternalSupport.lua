@@ -1988,7 +1988,9 @@ function library:Tab(title)
 
             function section:Dropdown(option)
 				option = lowerTable(option)
-                table.insert(option.content, "None")
+                if not option.dontusenone then
+                    table.insert(option.content, "None")
+                end
                 option.section = self
                 option.text = tostring(option.name)
                 option.values = typeof(option.content) == "table" and option.content or {}
