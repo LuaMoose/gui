@@ -2025,6 +2025,9 @@ function library:Tab(title)
                 end
 
 				function option:Get()
+                    if option.multiselect then
+                        return self.values
+                    end
 					return option.value
 				end
 
