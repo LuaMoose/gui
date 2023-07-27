@@ -870,7 +870,7 @@ library.createList = function(option, parent)
     })
 
     library:Create("ImageLabel", {
-        Size = UDim2.new(1, 0, 1, 0),
+        Size = UDim2.new(1, 0, 5, 0),
         BackgroundTransparency = 1,
         Image = "rbxassetid://2454009026",
         ImageColor3 = Color3.new(),
@@ -879,7 +879,7 @@ library.createList = function(option, parent)
     })
 
     library:Create("ImageLabel", {
-        Size = UDim2.new(1, 0, 1, 0),
+        Size = UDim2.new(1, 0, 5, 0),
         BackgroundTransparency = 1,
         Image = "rbxassetid://2592362371",
         ImageColor3 = Color3.fromRGB(60, 60, 60),
@@ -918,13 +918,12 @@ library.createList = function(option, parent)
         Text = "",
         AutoButtonColor = false,
         Visible = false,
-        Parent = library.base,
-        Size = UDim2.new(1, 0, 15, 0)
+        Parent = library.base
     })
 
     option.content = library:Create("ScrollingFrame", {
         ZIndex = 4,
-        Size = UDim2.new(1, 0, 15, 0),
+        Size = UDim2.new(1, 0, 5, 0),
         BackgroundTransparency = 1,
         BorderSizePixel = 0,
         ScrollBarImageColor3 = Color3.new(),
