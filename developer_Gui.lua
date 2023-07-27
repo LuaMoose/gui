@@ -980,7 +980,6 @@ library.createList = function(option, parent)
 
     option.listvalue.InputBegan:connect(function(input)
         if input.UserInputType.Name == "MouseButton1" then
-            print('RANNN')
             if library.popup == option then library.popup:Close() return end
             if library.popup then
                 library.popup:Close()
