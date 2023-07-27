@@ -915,7 +915,7 @@ library.createList = function(option, parent)
         ZIndex = 4,
         BackgroundColor3 = Color3.fromRGB(40, 40, 40),
         BorderColor3 = Color3.new(),
-        Size = UDim2.new(10, 0, 20, 0),
+        Size = UDim2.new(1, 0, 20, 0),
         Text = "",
         AutoButtonColor = false,
         Visible = false,
@@ -986,7 +986,7 @@ library.createList = function(option, parent)
             end
             option.arrow.Rotation = -90
             option.open = true
-            option.holder.Visible = true
+           -- option.holder.Visible = true
             local pos = option.main.AbsolutePosition
             option.holder.Position = UDim2.new(0, pos.X + 6, 0, pos.Y + ((option.text == "nil" and not option.sub) and 66 or 84))
             library.popup = option
