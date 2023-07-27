@@ -827,7 +827,7 @@ library.createList = function(option, parent)
     else
         option.main = library:Create("Frame", {
             LayoutOrder = option.position,
-            Size = UDim2.new(20, 0, 0, option.text == "nil" and 30 or 48),
+            Size = UDim2.new(1, 0, 0, option.text == "nil" and 70 or 90),
             BackgroundTransparency = 1,
             Parent = parent
         })
