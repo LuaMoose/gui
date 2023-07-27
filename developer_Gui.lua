@@ -870,7 +870,7 @@ library.createList = function(option, parent)
     })
 
     library:Create("ImageLabel", {
-        Size = UDim2.new(1, 0, 5, 0),
+        Size = UDim2.new(1, 0, 1, 0),
         BackgroundTransparency = 1,
         Image = "rbxassetid://2454009026",
         ImageColor3 = Color3.new(),
@@ -879,7 +879,7 @@ library.createList = function(option, parent)
     })
 
     library:Create("ImageLabel", {
-        Size = UDim2.new(1, 0, 5, 0),
+        Size = UDim2.new(1, 0, 1, 0),
         BackgroundTransparency = 1,
         Image = "rbxassetid://2592362371",
         ImageColor3 = Color3.fromRGB(60, 60, 60),
@@ -915,6 +915,7 @@ library.createList = function(option, parent)
         ZIndex = 4,
         BackgroundColor3 = Color3.fromRGB(40, 40, 40),
         BorderColor3 = Color3.new(),
+        Size = UDim2.new(1, 0, 5, 0),
         Text = "",
         AutoButtonColor = false,
         Visible = false,
@@ -978,6 +979,7 @@ library.createList = function(option, parent)
 
     option.listvalue.InputBegan:connect(function(input)
         if input.UserInputType.Name == "MouseButton1" then
+            print('RANNN')
             if library.popup == option then library.popup:Close() return end
             if library.popup then
                 library.popup:Close()
