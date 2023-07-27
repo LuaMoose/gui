@@ -973,7 +973,7 @@ library.createList = function(option, parent)
     local valueCount = 0
     layout.Changed:connect(function()
        -- option.holder.Size = UDim2.new(0, option.listvalue.AbsoluteSize.X, 0, 8 + (valueCount > option.max and (-2 + (option.max * 22)) or layout.AbsoluteContentSize.Y))
-        option.holder.Size = UDim2.new(0, option.listvalue.AbsoluteSize.X*2, 0, 8 + (valueCount > option.max and (-2 + (option.max * 22))*2 or layout.AbsoluteContentSize.Y*2))
+        option.holder.Size = UDim2.new(0, option.listvalue.AbsoluteSize.X, 0, 8 + (valueCount > option.max and (-2 + (option.max * 22))*2 or layout.AbsoluteContentSize.Y*2))
        option.content.CanvasSize = UDim2.new(0, 0, 0, 8 + layout.AbsoluteContentSize.Y)
     end)
     local interest = option.sub and option.listvalue or option.main
