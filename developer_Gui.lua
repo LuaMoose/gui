@@ -827,7 +827,7 @@ library.createList = function(option, parent)
     else
         option.main = library:Create("Frame", {
             LayoutOrder = option.position,
-            Size = UDim2.new(1, 0, 0, option.text == "nil" and 70 or 90),
+            Size = UDim2.new(1, 0, 0, option.text == "nil" and 30 or 48),
             BackgroundTransparency = 1,
             Parent = parent
         })
@@ -918,12 +918,13 @@ library.createList = function(option, parent)
         Text = "",
         AutoButtonColor = false,
         Visible = false,
-        Parent = library.base
+        Parent = library.base,
+        Size = UDim2.new(1, 0, 15, 0)
     })
 
     option.content = library:Create("ScrollingFrame", {
         ZIndex = 4,
-        Size = UDim2.new(1, 0, 30, 0),
+        Size = UDim2.new(1, 0, 15, 0),
         BackgroundTransparency = 1,
         BorderSizePixel = 0,
         ScrollBarImageColor3 = Color3.new(),
