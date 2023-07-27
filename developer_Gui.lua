@@ -924,7 +924,7 @@ library.createList = function(option, parent)
 
     option.content = library:Create("ScrollingFrame", {
         ZIndex = 4,
-        Size = UDim2.new(1, 0, 5, 0),
+        Size = UDim2.new(1, 0, 1, 0),
         BackgroundTransparency = 1,
         BorderSizePixel = 0,
         ScrollBarImageColor3 = Color3.new(),
