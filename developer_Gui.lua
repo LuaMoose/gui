@@ -2530,7 +2530,11 @@ function library:Init()
         Parent = self.main
     })
     local function toggleTopVisibility()
-        self.main.Parent = self.main.Parent ~= workspace and workspace or game:GetService"CoreGui"
+        if self.main.Parent == nil then
+            self.main.Parent = game:GetService"CoreGui"
+        elseif self.main.Parent == game:GetService"CoreGui" then
+            self.main.Parent = nil
+        end
     end
     
     local function onKeyPress(input, gameProcessedEvent)
