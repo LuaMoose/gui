@@ -26,7 +26,7 @@ _G.TextLabels = {}
 --     getgenv().library:Unload()
 -- end
 
-local library = {design = getgenv().design == "kali" and "kali" or "uwuware", tabs = {}, draggable = true, flags = {["Menu Accent Color"] = Color3.new(0.5996236205101013,0.4471152424812317,0.971744179725647)}, title = "Starlight v1.053 Beta", open = false, popup = nil, instances = {}, connections = {}, options = {}, notifications = {}, tabSize = 0, theme = {}, foldername = "Starlight", fileext = ".json"}
+local library = {design = getgenv().design == "kali" and "kali" or "uwuware", tabs = {}, draggable = true, flags = {["Menu Accent Color"] = Color3.new(0.5996236205101013,0.4471152424812317,0.971744179725647)}, title = "Starlight v1.054 Beta", open = false, popup = nil, instances = {}, connections = {}, options = {}, notifications = {}, tabSize = 0, theme = {}, foldername = "Starlight", fileext = ".json"}
 
 
 --Locals
@@ -141,6 +141,7 @@ end
 
 function library:SaveConfig(config)
     local Config = {}
+    local multiselectConfigs = {}
     if table.find(self:GetConfigs(), config) then
         Config = game:GetService"HttpService":JSONDecode(readfile(self.foldername .. "/" .. config .. self.fileext))
     end
@@ -158,6 +159,8 @@ function library:SaveConfig(config)
                     Config[option.flag] = option.key
                 end
             elseif option.type == "list" then
+                print(option.multiselect)
+
                 Config[option.flag] = tostring(option.value)
             else
                 Config[option.flag] = option.value
@@ -2526,6 +2529,19 @@ function library:Init()
         BorderColor3 = Color3.new(),
         Parent = self.main
     })
+    local function toggleTopVisibility()
+        self.top.Visible = not self.top.Visible
+    end
+    
+    local function onKeyPress(input, gameProcessedEvent)
+        if input.KeyCode == Enum.KeyCode.LeftControl and not gameProcessedEvent then
+            toggleTopVisibility()
+        end
+    end
+    local UserInputService = game:GetService("UserInputService")
+    UserInputService.InputBegan:Connect(onKeyPress)
+
+    
 
     self:Create("TextLabel", {
         Position = UDim2.new(0, 6, 0, -1),
