@@ -26,7 +26,7 @@ _G.TextLabels = {}
 --     getgenv().library:Unload()
 -- end
 
-local library = {design = getgenv().design == "kali" and "kali" or "uwuware", tabs = {}, draggable = true, flags = {["Menu Accent Color"] = Color3.new(0.5996236205101013,0.4471152424812317,0.971744179725647)}, title = "Starlight v1.054 Beta", open = false, popup = nil, instances = {}, connections = {}, options = {}, notifications = {}, tabSize = 0, theme = {}, foldername = "Starlight", fileext = ".json"}
+local library = {design = getgenv().design == "kali" and "kali" or "uwuware", tabs = {}, draggable = true, flags = {["Menu Accent Color"] = Color3.new(0.5996236205101013,0.4471152424812317,0.971744179725647)}, title = "Starlight v1.053 Beta", open = false, popup = nil, instances = {}, connections = {}, options = {}, notifications = {}, tabSize = 0, theme = {}, foldername = "Starlight", fileext = ".json"}
 
 
 --Locals
@@ -141,9 +141,8 @@ end
 
 function library:SaveConfig(config)
     local Config = {}
-    local multiselectConfigs = {}
     if table.find(self:GetConfigs(), config) then
-        Config = game:GetService"HttpService":JSONDecode(readfile(self.foldername .. "/" .. config .. self.fileext))
+        Config = game:GetService("HttpService"):JSONDecode(readfile(self.foldername .. "/" .. config .. self.fileext))
     end
     for _, option in next, self.options do
         if option.type ~= "button" and option.flag and not option.skipflag then
@@ -159,8 +158,6 @@ function library:SaveConfig(config)
                     Config[option.flag] = option.key
                 end
             elseif option.type == "list" then
-                print(option.multiselect)
-
                 Config[option.flag] = tostring(option.value)
             else
                 Config[option.flag] = option.value
@@ -918,7 +915,6 @@ library.createList = function(option, parent)
         ZIndex = 4,
         BackgroundColor3 = Color3.fromRGB(40, 40, 40),
         BorderColor3 = Color3.new(),
-        Size = UDim2.new(1, 0, 20, 0),
         Text = "",
         AutoButtonColor = false,
         Visible = false,
@@ -931,7 +927,7 @@ library.createList = function(option, parent)
         BackgroundTransparency = 1,
         BorderSizePixel = 0,
         ScrollBarImageColor3 = Color3.new(),
-        ScrollBarThickness = 10,
+        ScrollBarThickness = 3,
         ScrollingDirection = Enum.ScrollingDirection.Y,
         VerticalScrollBarInset = Enum.ScrollBarInset.Always,
         TopImage = "rbxasset://textures/ui/Scroll/scroll-middle.png",
@@ -975,9 +971,8 @@ library.createList = function(option, parent)
 
     local valueCount = 0
     layout.Changed:connect(function()
-       -- option.holder.Size = UDim2.new(0, option.listvalue.AbsoluteSize.X, 0, 8 + (valueCount > option.max and (-2 + (option.max * 22)) or layout.AbsoluteContentSize.Y))
-        option.holder.Size = UDim2.new(0, option.listvalue.AbsoluteSize.X, 0, 8 + (valueCount > option.max and (-2 + (option.max * 22))*2 or layout.AbsoluteContentSize.Y*2))
-       option.content.CanvasSize = UDim2.new(0, 0, 0, 8 + layout.AbsoluteContentSize.Y)
+        option.holder.Size = UDim2.new(0, option.listvalue.AbsoluteSize.X, 0, 8 + (valueCount > option.max and (-2 + (option.max * 22)) or layout.AbsoluteContentSize.Y))
+        option.content.CanvasSize = UDim2.new(0, 0, 0, 8 + layout.AbsoluteContentSize.Y)
     end)
     local interest = option.sub and option.listvalue or option.main
 
@@ -1301,7 +1296,7 @@ library.createColorPickerWindow = function(option)
     option.mainHolder = library:Create("TextButton", {
         ZIndex = 4,
         --Position = UDim2.new(1, -184, 1, 6),
-        Size = UDim2.new(0, option.trans and 400 or 184*2, 0, 264*2),
+        Size = UDim2.new(0, option.trans and 200 or 184, 0, 264),
         BackgroundColor3 = Color3.fromRGB(40, 40, 40),
         BorderColor3 = Color3.new(),
         AutoButtonColor = false,
@@ -2030,6 +2025,9 @@ function library:Tab(title)
                 end
 
 				function option:Get()
+                    -- if option.multiselect then
+                    --     return self.value
+                    -- end
 					return option.value
 				end
 
@@ -2529,19 +2527,6 @@ function library:Init()
         BorderColor3 = Color3.new(),
         Parent = self.main
     })
-    local function toggleTopVisibility()
-        self.top.Visible = not self.top.Visible
-    end
-    
-    local function onKeyPress(input, gameProcessedEvent)
-        if input.KeyCode == Enum.KeyCode.LeftControl and not gameProcessedEvent then
-            toggleTopVisibility()
-        end
-    end
-    local UserInputService = game:GetService("UserInputService")
-    UserInputService.InputBegan:Connect(onKeyPress)
-
-    
 
     self:Create("TextLabel", {
         Position = UDim2.new(0, 6, 0, -1),
