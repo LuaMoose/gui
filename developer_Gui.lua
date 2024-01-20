@@ -388,7 +388,7 @@ library.createToggle = function(option, parent)
     })
 
     option.interest.InputBegan:connect(function(input)
-        if input.UserInputType.Name == "MouseButton1" or "Touch" then
+        if input.UserInputType.Name == "MouseButton1" or  input.UserInputType.Name == "Touch" then
             option:SetState(not option.state)
         end
         if input.UserInputType.Name == "MouseMovement" then
@@ -506,7 +506,7 @@ library.createButton = function(option, parent)
     })
 
     option.title.InputBegan:connect(function(input)
-        if input.UserInputType.Name == "MouseButton1" or "Touch" then
+        if input.UserInputType.Name == "MouseButton1" or input.UserInputType.Name == "Touch" then
             option.callback()
             if library then
                 library.flags[option.flag] = true
@@ -588,7 +588,7 @@ library.createBind = function(option, parent)
     local interest = option.sub and bindinput or option.main
     local inContact
     interest.InputEnded:connect(function(input)
-        if input.UserInputType.Name == "MouseButton1" or "Touch" then
+        if input.UserInputType.Name == "MouseButton1" or input.UserInputType.Name == "Touch" then
             binding = true
             bindinput.Text = "[...]"
             bindinput.Size = UDim2.new(0, -textService:GetTextSize(bindinput.Text, 16, Enum.Font.Code, Vector2.new(9e9, 9e9)).X, 0, 16)
@@ -763,7 +763,7 @@ library.createSlider = function(option, parent)
 
     local interest = (option.sub or option.textpos) and option.slider or option.main
     interest.InputBegan:connect(function(input)
-        if input.UserInputType.Name == "MouseButton1" or "Touch" then
+        if input.UserInputType.Name == "MouseButton1" or input.UserInputType.Name == "Touch" then
             if inputService:IsKeyDown(Enum.KeyCode.LeftControl) or inputService:IsKeyDown(Enum.KeyCode.RightControl) then
                 manualInput = true
                 option.title:CaptureFocus()
@@ -982,7 +982,7 @@ library.createList = function(option, parent)
     local interest = option.sub and option.listvalue or option.main
 
     option.listvalue.InputBegan:connect(function(input)
-        if input.UserInputType.Name == "MouseButton1" or "Touch" then
+        if input.UserInputType.Name == "MouseButton1" or input.UserInputType.Name == "Touch" then
             if library.popup == option then library.popup:Close() return end
             if library.popup then
                 library.popup:Close()
@@ -1076,7 +1076,7 @@ library.createList = function(option, parent)
         table.insert(library.theme, labelOverlay)
 
         label.InputBegan:connect(function(input)
-            if input.UserInputType.Name == "MouseButton1" or "Touch" then
+            if input.UserInputType.Name == "MouseButton1" or input.UserInputType.Name == "Touch" then
                 if self.multiselect then
                     self.value[value] = not self.value[value]
                     self:SetValue(self.value)
@@ -1246,7 +1246,7 @@ library.createBox = function(option, parent)
     end)
 
     inputvalue.InputBegan:connect(function(input)
-        if input.UserInputType.Name == "MouseButton1" or "Touch" then
+        if input.UserInputType.Name == "MouseButton1" or input.UserInputType.Name == "Touch" then
             inputvalue.Text = ""
         end
         if input.KeyCode == Enum.KeyCode.Return then
@@ -1433,14 +1433,14 @@ library.createColorPickerWindow = function(option)
         })
 
         transMain.InputBegan:connect(function(Input)
-            if Input.UserInputType.Name == "MouseButton1" or "Touch" then
+            if Input.UserInputType.Name == "MouseButton1" or input.UserInputType.Name == "Touch" then
                 editingtrans = true
                 option:SetTrans(1 - ((Input.Position.Y - transMain.AbsolutePosition.Y) / transMain.AbsoluteSize.Y))
             end
         end)
 
         transMain.InputEnded:connect(function(Input)
-            if Input.UserInputType.Name == "MouseButton1" or "Touch" then
+            if Input.UserInputType.Name == "MouseButton1" or input.UserInputType.Name == "Touch" then
                 editingtrans = false
             end
         end)
@@ -1479,7 +1479,7 @@ library.createColorPickerWindow = function(option)
     })
 
     hueMain.InputBegan:connect(function(Input)
-        if Input.UserInputType.Name == "MouseButton1" or "Touch" then
+        if Input.UserInputType.Name == "MouseButton1" or input.UserInputType.Name == "Touch" then
             editinghue = true
             X = (hueMain.AbsolutePosition.X + hueMain.AbsoluteSize.X) - hueMain.AbsolutePosition.X
             X = math.clamp((Input.Position.X - hueMain.AbsolutePosition.X) / X, 0, 0.995)
@@ -1488,7 +1488,7 @@ library.createColorPickerWindow = function(option)
     end)
 
     hueMain.InputEnded:connect(function(Input)
-        if Input.UserInputType.Name == "MouseButton1" or "Touch" then
+        if Input.UserInputType.Name == "MouseButton1" or input.UserInputType.Name == "Touch" then
             editinghue = false
         end
     end)
@@ -1515,7 +1515,7 @@ library.createColorPickerWindow = function(option)
     })
 
     satval.InputBegan:connect(function(Input)
-        if Input.UserInputType.Name == "MouseButton1" or "Touch" then
+        if Input.UserInputType.Name == "MouseButton1" or input.UserInputType.Name == "Touch" then
             editingsatval = true
             X = (satval.AbsolutePosition.X + satval.AbsoluteSize.X) - satval.AbsolutePosition.X
             Y = (satval.AbsolutePosition.Y + satval.AbsoluteSize.Y) - satval.AbsolutePosition.Y
@@ -1544,7 +1544,7 @@ library.createColorPickerWindow = function(option)
     end)
 
     satval.InputEnded:connect(function(Input)
-        if Input.UserInputType.Name == "MouseButton1" or "Touch" then
+        if Input.UserInputType.Name == "MouseButton1" or input.UserInputType.Name == "Touch" then
             editingsatval = false
         end
     end)
@@ -1667,7 +1667,7 @@ library.createColor = function(option, parent)
     end
 
     interest.InputBegan:connect(function(input)
-        if input.UserInputType.Name == "MouseButton1" or "Touch" then
+        if input.UserInputType.Name == "MouseButton1" or input.UserInputType.Name == "Touch" then
             if not option.mainHolder then library.createColorPickerWindow(option) end
             if library.popup == option then library.popup:Close() return end
             if library.popup then library.popup:Close() end
@@ -2289,7 +2289,7 @@ function library:Tab(title)
         library.tabSize = library.tabSize + size-7
 
         self.button.InputBegan:connect(function(input)
-            if input.UserInputType.Name == "MouseButton1" or "Touch" then
+            if input.UserInputType.Name == "MouseButton1" or input.UserInputType.Name == "Touch" then
                 library:selectTab(self)
             end
         end)
@@ -2416,13 +2416,13 @@ function library:AddWarning(warning)
                 })
 
                 button.InputBegan:connect(function(input)
-                    if input.UserInputType.Name == "MouseButton1" or "Touch" then
+                    if input.UserInputType.Name == "MouseButton1" or input.UserInputType.Name == "Touch" then
                         answer = true
                     end
                 end)
 
                 button1.InputBegan:connect(function(input)
-                    if input.UserInputType.Name == "MouseButton1" or "Touch" then
+                    if input.UserInputType.Name == "MouseButton1" or input.UserInputType.Name == "Touch" then
                         answer = false
                     end
                 end)
@@ -2462,7 +2462,7 @@ function library:AddWarning(warning)
                 })
 
                 button.InputBegan:connect(function(input)
-                    if input.UserInputType.Name == "MouseButton1" or "Touch" then
+                    if input.UserInputType.Name == "MouseButton1" or input.UserInputType.Name == "Touch" then
                         answer = true
                     end
                 end)
@@ -2631,7 +2631,7 @@ function library:Init()
     })
 
     self.top.InputBegan:connect(function(input)
-        if input.UserInputType.Name == "MouseButton1" or "Touch" then
+        if input.UserInputType.Name == "MouseButton1" or input.UserInputType.Name == "Touch" then
             dragObject = self.main
             dragging = true
             dragStart = input.Position
@@ -2645,7 +2645,7 @@ function library:Init()
         end
     end)
     self.top.InputEnded:connect(function(input)
-        if input.UserInputType.Name == "MouseButton1" or "Touch" then
+        if input.UserInputType.Name == "MouseButton1" or input.UserInputType.Name == "Touch" then
             dragging = false
         end
     end)
@@ -2695,7 +2695,7 @@ function library:Init()
     end
 
     self:AddConnection(inputService.InputEnded, function(input)
-        if input.UserInputType.Name == "MouseButton1" or "Touch" and self.slider then
+        if input.UserInputType.Name == "MouseButton1" or input.UserInputType.Name == "Touch" and self.slider then
             self.slider.slider.BorderColor3 = Color3.new()
             self.slider = nil
         end
