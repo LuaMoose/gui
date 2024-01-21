@@ -388,6 +388,7 @@ library.createToggle = function(option, parent)
     })
 
     option.interest.InputBegan:connect(function(input)
+        print(input.UserInputType.Name)
         if input.UserInputType.Name == "MouseButton1" or  input.UserInputType.Name == "Touch" then
             option:SetState(not option.state)
         end
