@@ -2698,7 +2698,7 @@ function library:Init()
     self:AddConnection(inputService.InputEnded, function(input)
         if input.UserInputType.Name == "MouseButton1" or input.UserInputType.Name == "Touch" and self.slider then
         --    self.slider.slider.BorderColor3 = Color3.new()
-        --    self.slider = nil
+            self.slider = nil
         end
     end)
 
